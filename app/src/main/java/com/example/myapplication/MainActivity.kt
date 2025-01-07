@@ -15,16 +15,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        val button = findViewById<Button>(R.id.button)
+        val button1 = findViewById<Button>(R.id.button1)
+        val button2 = findViewById<Button>(R.id.button2)
         val textView1 = findViewById<TextView>(R.id.chigibam)
         val textView2 = findViewById<TextView>(R.id.secondtextview)
         // Set up the button click listener
-        button.setOnClickListener {
+        button1.setOnClickListener {
             // Show a Toast message when the button is clicked
             textView1.text = "Button Clicked!"
             Toast.makeText(this, "Button Clicked!", Toast.LENGTH_SHORT).show()
             textView2.text = "Button Clicked too!"
 
+        }
+        button2.setOnClickListener {
+            // Show a Toast message when the button is clicked
+            textView1.text = "Button 222222222222222222 Clicked!"
+            Toast.makeText(this, "Button 2222222 Clicked!", Toast.LENGTH_SHORT).show()
+            textView2.text = "Button 222222 Clicked too!"
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

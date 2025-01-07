@@ -7,36 +7,53 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="256dp"
         android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.072"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button"
-        app:layout_constraintVertical_bias="0.478" />
+        app:layout_constraintStart_toStartOf="@+id/button1"
+        app:layout_constraintTop_toTopOf="@+id/button1"
+        app:layout_constraintVertical_bias="0.261" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click Me"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.288"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.695" />
+
+    <Button
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Click Me"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.401" />
 
     <TextView
         android:id="@+id/chigibam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Button not clicked yet"
-        app:layout_constraintTop_toBottomOf="@id/button"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="18sp" />
+        app:layout_constraintHorizontal_bias="0.933"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button1" />
 
     <TextView
         android:id="@+id/secondtextview"
