@@ -4,7 +4,9 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.textfield.TextInputEditText
 
 class AddCardSETActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,10 +14,37 @@ class AddCardSETActivity : AppCompatActivity() {
         setContentView(R.layout.addcardset)
 
         val backButton = findViewById<Button>(R.id.backButton)
+        val createButton = findViewById<Button>(R.id.startCreatingButton)
+        val nameInput = findViewById<TextInputEditText>(R.id.setNameInput)
+        val numberInput = findViewById<TextInputEditText>(R.id.setNumberInput)
+
 
         backButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        }
+
+        createButton.setOnClickListener {
+            var validName = false;
+            var validNumber = false;
+
+            if(nameInput.text.toString().length < 50 && nameInput.text.toString().isNotEmpty()) {
+                validName = true;
+            } else{
+                Toast.makeText(this, "Enter a valid name.", Toast.LENGTH_LONG).show()
+            }
+            if(numberInput.text.toString().isNotEmpty() && numberInput.text.toString().toInt() <= 15) {
+                validNumber = true;
+            } else{
+                Toast.makeText(this, "Enter a valid number.", Toast.LENGTH_LONG).show()
+            }
+
+            if(validName && validNumber) {
+                val intent = Intent(this, AddCardActivity::class.java)
+                intent.putExtra("name", nameInput.text.toString())
+                intent.putExtra("number", numberInput.text.toString().toInt())
+                startActivity(intent)
+            }
         }
     }
 
@@ -30,6 +59,6 @@ class AddCardSETActivity : AppCompatActivity() {
 //when 10/10 done go to activity which shows sets of all cards(second button on main activity)
 //if clicked on the set which is displayed in a recyclerview, show each individual flashcard inside that set
 
-
+//when goes into the addcardactivity, pass the name of the cardset and the number of cards to show user on which card are they on now
 
 //further: make flashcard demonstration actually purposeful by randomizing card order blah blah

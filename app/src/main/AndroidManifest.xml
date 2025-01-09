@@ -21,8 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddCardSETActivity">
+        <activity android:name=".AddCardSETActivity"
+            android:exported="false">
         </activity>
+        <activity android:name=".AddCardActivity">
+        </activity>
+
+
     </application>
 
 </manifest>
