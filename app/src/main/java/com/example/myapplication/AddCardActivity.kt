@@ -23,10 +23,14 @@ class AddCardActivity : AppCompatActivity() {
             val intent = Intent(this, AddCardSETActivity::class.java)
             startActivity(intent)
         }
-        val nameTextView = findViewById<TextView>(R.id.name)
-        val numberTextView = findViewById<TextView>(R.id.number)
-        nameTextView.setText(setName)
-        numberTextView.setText(setNumber.toString())
+        //val nameTextView = findViewById<TextView>(R.id.cardText)
+        //nameTextView.setText(setName)
+        val numberTextView = findViewById<TextView>(R.id.cardCount)
+        var currentCardNumber = 1;
+        var cardNumberString = currentCardNumber.toString() + "/" + setNumber.toString()
+        numberTextView.setText(cardNumberString)
+
+
 
 
     }
