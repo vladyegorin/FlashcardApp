@@ -42,6 +42,7 @@ class AddCardSETActivity : AppCompatActivity() {
             if(validName && validNumber) {
                 val intent = Intent(this, AddCardActivity::class.java)
                 intent.putExtra("name", nameInput.text.toString())
+                intent.putExtra("currnumber", 1.toString())
                 intent.putExtra("number", numberInput.text.toString().toInt())
                 startActivity(intent)
             }
