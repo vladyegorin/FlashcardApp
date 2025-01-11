@@ -7,23 +7,18 @@
 
 
 
-
-    <TextView
-        android:id="@+id/chigibam"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FLASHCARD APP"
-        android:textColor="#6750A3"
-        android:textSize="40sp"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:title="Flashcard App"
+        app:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.039"
-        tools:textStyle="bold" />
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
 
     <!--
@@ -112,7 +107,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Question"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
