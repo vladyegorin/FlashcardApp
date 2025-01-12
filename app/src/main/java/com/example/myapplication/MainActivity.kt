@@ -23,6 +23,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, AddCardSETActivity::class.java)
             startActivity(intent)
         }
+        button2.setOnClickListener {
+            val intent = Intent(this, SeeSetsActivity::class.java)
+            startActivity(intent)
+        }
 
 //        val textView1 = findViewById<TextView>(R.id.chigibam)
 //        val textView2 = findViewById<TextView>(R.id.secondtextview)
