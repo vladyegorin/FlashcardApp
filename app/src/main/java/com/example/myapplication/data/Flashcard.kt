@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
     foreignKeys = [
         ForeignKey(
             entity = FlashcardSet::class,
-            parentColumns = ["id"],
+            parentColumns = ["setId"],
             childColumns = ["setId"],
             onDelete = ForeignKey.CASCADE
         )

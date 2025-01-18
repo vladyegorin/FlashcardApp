@@ -1,12 +1,16 @@
 package com.example.myapplication
 
-
+import androidx.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.data.FlashcardDatabase
+import com.example.myapplication.data.FlashcardSet
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class AddCardSETActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +21,12 @@ class AddCardSETActivity : AppCompatActivity() {
         val createButton = findViewById<Button>(R.id.startCreatingButton)
         val nameInput = findViewById<TextInputEditText>(R.id.setNameInput)
         val numberInput = findViewById<TextInputEditText>(R.id.setNumberInput)
-
+        val database = Room.databaseBuilder(
+            applicationContext, // Or `this` in an activity context
+            FlashcardDatabase::class.java,
+            "flashcard_database" // Name of the database file
+        ).build()
+        val flashcardSetDao = database.flashcardSetDao()
 
         backButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -40,11 +49,22 @@ class AddCardSETActivity : AppCompatActivity() {
             }
 
             if(validName && validNumber) {
-                val intent = Intent(this, AddCardActivity::class.java)
-                intent.putExtra("name", nameInput.text.toString())
-                intent.putExtra("currnumber", 1.toString())
-                intent.putExtra("number", numberInput.text.toString().toInt())
-                startActivity(intent)
+                GlobalScope.launch {
+                    val newSet = FlashcardSet(
+                        setId = 0, // Auto-generate if `@PrimaryKey(autoGenerate = true)` is used
+                        setName = nameInput.text.toString()
+                    )
+                    flashcardSetDao.insertFlashcardSet(newSet)
+                }
+                val intentCards = Intent(this, AddCardActivity::class.java)
+                intentCards.putExtra("name", nameInput.text.toString())
+                intentCards.putExtra("currnumber", 1.toString())
+                intentCards.putExtra("number", numberInput.text.toString().toInt())
+                startActivity(intentCards)
+
+                val intentSeeSets = Intent(this, SeeSetsActivity::class.java)
+                intentSeeSets.putExtra("name", nameInput.text.toString())
+                startActivity(intentSeeSets)
             }
         }
     }
