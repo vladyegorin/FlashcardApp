@@ -4,12 +4,13 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "flashcards",
+@Entity(
+    tableName = "flashcards",
     foreignKeys = [
         ForeignKey(
             entity = FlashcardSet::class,
-            parentColumns = ["setId"],
-            childColumns = ["setId"],
+            parentColumns = ["id"],  // Reference to FlashcardSet's id column
+            childColumns = ["setId"],  // Foreign key column in Flashcard
             onDelete = ForeignKey.CASCADE
         )
     ]
@@ -18,5 +19,6 @@ data class Flashcard(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val question: String,
     val answer: String,
-    val setId: Int        // ID of the flashcard set this belongs to
+    val setId: Long  // Foreign key reference to FlashcardSet's id
 )
+

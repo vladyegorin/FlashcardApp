@@ -1,88 +1,69 @@
 package com.example.myapplication
 
-import androidx.room.Room
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.data.FlashcardDatabase
 import com.example.myapplication.data.FlashcardSet
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AddCardSETActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.addcardset)
 
-        val backButton = findViewById<Button>(R.id.backButton)
-        val createButton = findViewById<Button>(R.id.startCreatingButton)
-        val nameInput = findViewById<TextInputEditText>(R.id.setNameInput)
-        val numberInput = findViewById<TextInputEditText>(R.id.setNumberInput)
-        val database = Room.databaseBuilder(
-            applicationContext, // Or `this` in an activity context
-            FlashcardDatabase::class.java,
-            "flashcard_database" // Name of the database file
-        ).build()
-        val flashcardSetDao = database.flashcardSetDao()
+        val setNameInput = findViewById<TextInputEditText>(R.id.setNameInput)
+        val setNumberInput = findViewById<TextInputEditText>(R.id.setNumberInput)
+        val createSetButton = findViewById<Button>(R.id.startCreatingButton)
 
-        backButton.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
+        // Initialize the database and the DAO for FlashcardSets
+        val database = FlashcardDatabase.getInstance(applicationContext)
+        val flashcardSetDao = database.flashcardDao() // Corrected DAO access
 
-        createButton.setOnClickListener {
-            var validName = false;
-            var validNumber = false;
+        createSetButton.setOnClickListener {
+            val setName = setNameInput.text.toString()
+            val setNumber = setNumberInput.text.toString().toIntOrNull()
 
-            if(nameInput.text.toString().length < 50 && nameInput.text.toString().isNotEmpty()) {
-                validName = true;
-            } else{
-                Toast.makeText(this, "Enter a valid name.", Toast.LENGTH_LONG).show()
-            }
-            if(numberInput.text.toString().isNotEmpty() && numberInput.text.toString().toInt() <= 15) {
-                validNumber = true;
-            } else{
-                Toast.makeText(this, "Enter a valid number.", Toast.LENGTH_LONG).show()
-            }
+            // Validate the inputs
+            if (setName.isEmpty() || setNumber == null || setNumber <= 0) {
+                Toast.makeText(this, "Enter valid set details", Toast.LENGTH_LONG).show()
+            } else {
+                // Create the new FlashcardSet object
+                val newSet = FlashcardSet(setName = setName, numberOfFlashcards = setNumber)
 
-            if(validName && validNumber) {
-                GlobalScope.launch {
-                    val newSet = FlashcardSet(
-                        setId = 0, // Auto-generate if `@PrimaryKey(autoGenerate = true)` is used
-                        setName = nameInput.text.toString()
-                    )
-                    flashcardSetDao.insertFlashcardSet(newSet)
+                // Use lifecycleScope to launch a coroutine for inserting the new set
+                lifecycleScope.launch(Dispatchers.IO) {
+                    try {
+                        // Insert the new set into the database
+                        val setId = flashcardSetDao.insertFlashcardSet(newSet)
+
+                        // After inserting, navigate to AddCardActivity
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(this@AddCardSETActivity, "Set created!", Toast.LENGTH_LONG).show()
+
+                            val intent = Intent(this@AddCardSETActivity, AddCardActivity::class.java).apply {
+                                putExtra("name", setName)
+                                putExtra("number", setNumber)
+                                putExtra("currnumber", 1)
+                                putExtra("setId", setId) // Pass the setId to the next activity
+                            }
+                            startActivity(intent)
+                            finish() // Close this activity
+                        }
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(this@AddCardSETActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
-                val intentCards = Intent(this, AddCardActivity::class.java)
-                intentCards.putExtra("name", nameInput.text.toString())
-                intentCards.putExtra("currnumber", 1.toString())
-                intentCards.putExtra("number", numberInput.text.toString().toInt())
-                startActivity(intentCards)
-
-                val intentSeeSets = Intent(this, SeeSetsActivity::class.java)
-                intentSeeSets.putExtra("name", nameInput.text.toString())
-                startActivity(intentSeeSets)
             }
         }
     }
-
-
 }
-
-//will receive a name
-//MAKE SURE NAME LENGTH <50 OR WHATEVER
-//will receive a number of cards MAKE SURE IT IS A NUMBER(isdigit or whatever) UP TO 15(if not, say to choose a smaller number)
-//(if<0 say to choose a bigger number
-//if everything matches, listen to the button and lead to an activity where each individual card is created
-
-
-//there on top the current card number is shown like YOU ARE CREATING A CARD 4 / 10
-//when 10/10 done go to activity which shows sets of all cards(second button on main activity)
-//if clicked on the set which is displayed in a recyclerview, show each individual flashcard inside that set
-
-//when goes into the addcardactivity, pass the name of the cardset and the number of cards to show user on which card are they on now
-
-//further: make flashcard demonstration actually purposeful by randomizing card order blah blah

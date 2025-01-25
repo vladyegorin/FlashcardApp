@@ -1,18 +1,23 @@
+// SeeSetsActivity.kt
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.data.FlashcardSet
 import com.example.myapplication.data.FlashcardDatabase
 import com.example.myapplication.data.FlashcardSetAdapter
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-private lateinit var recyclerView: RecyclerView
-private lateinit var adapter: FlashcardSetAdapter
 class SeeSetsActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: FlashcardSetAdapter<FlashcardSet> // Specify type as FlashcardSet
+
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +29,7 @@ class SeeSetsActivity : AppCompatActivity() {
         // Fetch data from the database
         GlobalScope.launch {
             val sets = FlashcardDatabase.getInstance(applicationContext)
-                .flashcardSetDao()
+                .flashcardsetDao()
                 .getAllFlashcardSets()
 
             // Log the size of the retrieved list
@@ -32,7 +37,13 @@ class SeeSetsActivity : AppCompatActivity() {
 
             // Update RecyclerView on the main thread
             runOnUiThread {
-                adapter = FlashcardSetAdapter(sets)
+                adapter = FlashcardSetAdapter(sets) { flashcardSet ->
+                    // Handle the click event for a flashcard set
+                    val intent = Intent(this@SeeSetsActivity, InsideSetActivity::class.java).apply {
+                        putExtra("setId", flashcardSet.id) // Pass the set ID to the next activity
+                    }
+                    startActivity(intent)
+                }
                 recyclerView.adapter = adapter
             }
         }

@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "flashcard_sets")
 data class FlashcardSet(
-    @PrimaryKey(autoGenerate = true) val setId: Int = 0, // Unique ID for each set
-    val setName: String                                  // Name of the flashcard set
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,  // Primary key
+    val setName: String,
+    val numberOfFlashcards: Int
 )

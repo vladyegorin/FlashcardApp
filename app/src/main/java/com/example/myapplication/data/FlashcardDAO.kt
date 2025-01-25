@@ -1,16 +1,24 @@
 package com.example.myapplication.data
 
-import androidx.room.*
-
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
 
 @Dao
 interface FlashcardDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFlashcard(flashcard: Flashcard): Long
+    @Insert
+    suspend fun insertFlashcardSet(flashcardSet: FlashcardSet): Long
 
-    @Delete
-    suspend fun deleteFlashcard(flashcard: Flashcard)
+    @Insert
+    suspend fun insertFlashcard(flashcard: Flashcard)
+
+    @Query("SELECT * FROM flashcard_sets")
+    suspend fun getAllFlashcardSets(): List<FlashcardSet>
 
     @Query("SELECT * FROM flashcards WHERE setId = :setId")
-    suspend fun getFlashcardsForSet(setId: Int): List<Flashcard>
+    suspend fun getFlashcardsBySetId(setId: Long): List<Flashcard>
+
+    @Query("SELECT * FROM flashcard_sets WHERE id = :setId")
+    suspend fun getSetById(setId: Long): FlashcardSet?
+
 }
