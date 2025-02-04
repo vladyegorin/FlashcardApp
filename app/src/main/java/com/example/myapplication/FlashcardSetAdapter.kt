@@ -22,8 +22,8 @@ class FlashcardSetAdapter<T>(
 
     // ViewHolder for Flashcard
     inner class FlashcardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val question: TextView = itemView.findViewById(R.id.textViewQuestion)
-        val answer: TextView = itemView.findViewById(R.id.textViewAnswer)
+        val question: TextView = itemView.findViewById(R.id.questionTextView)
+        val answer: TextView = itemView.findViewById(R.id.answerTextView)
     }
 
     // Override to handle different view types for FlashcardSet and Flashcard

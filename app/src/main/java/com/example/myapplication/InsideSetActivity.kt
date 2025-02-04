@@ -3,45 +3,54 @@ package com.example.myapplication
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.data.FlashcardDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class InsideSetActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: FlashcardAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.insideset)
 
+        // Initialize views
+        recyclerView = findViewById(R.id.recyclerViewFlashcards)
         val backButton = findViewById<Button>(R.id.backButton)
-        val setName = intent.getStringExtra("name")
-        val setTotalCardNumber = intent.getIntExtra("number", 0)
-        val currentCardNumber = intent.getIntExtra("currnumber", 1)
-        val setId = intent.getLongExtra("setId", -1L) // Ensure it's fetched as Long
 
+        // Fetch the setId from the intent
+        val setId = intent.getLongExtra("setId", -1L)
         if (setId == -1L) {
             // Invalid set ID, exit the activity
+            Toast.makeText(this, "Invalid flashcard set", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        val numberTextView = findViewById<TextView>(R.id.cardCount)
-        numberTextView.text = "$currentCardNumber/$setTotalCardNumber"
+        // Set up RecyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        adapter = FlashcardAdapter(emptyList()) // Initialize with an empty list
+        recyclerView.adapter = adapter
 
-        // Ensure flashcards are fetched for the correct set
+        // Fetch flashcards for the set
         lifecycleScope.launch {
             try {
                 val flashcards = withContext(Dispatchers.IO) {
                     FlashcardDatabase.getInstance(applicationContext)
                         .flashcardDao()
-                        .getFlashcardsBySetId(setId) // setId should be Long here
+                        .getFlashcardsBySetId(setId) // Fetch flashcards by setId
                 }
 
-                // Handle the fetched flashcards here (e.g., displaying them in a list)
+                // Update the adapter with the fetched flashcards
+                adapter.updateList(flashcards)
 
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -50,9 +59,11 @@ class InsideSetActivity : AppCompatActivity() {
             }
         }
 
+        // Handle back button click
         backButton.setOnClickListener {
             val intent = Intent(this, SeeSetsActivity::class.java)
             startActivity(intent)
+            finish() // Close this activity
         }
     }
 }

@@ -41,6 +41,7 @@ class SeeSetsActivity : AppCompatActivity() {
                     // Handle the click event for a flashcard set
                     val intent = Intent(this@SeeSetsActivity, InsideSetActivity::class.java).apply {
                         putExtra("setId", flashcardSet.id) // Pass the set ID to the next activity
+                        finish()
                     }
                     startActivity(intent)
                 }
