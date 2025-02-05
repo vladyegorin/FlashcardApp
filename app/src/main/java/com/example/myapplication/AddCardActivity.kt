@@ -20,7 +20,7 @@ class AddCardActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.addcard)
 
-        val backButton = findViewById<Button>(R.id.backButton)
+
         val setName = intent.getStringExtra("name")
         val setTotalCardNumber = intent.getIntExtra("number", 0)
         val currentCardNumber = intent.getIntExtra("currnumber", 1)
@@ -89,9 +89,6 @@ class AddCardActivity : AppCompatActivity() {
             }
         }
 
-        backButton.setOnClickListener {
-            val intent = Intent(this, AddCardSETActivity::class.java)
-            startActivity(intent)
-        }
+
     }
 }

@@ -22,17 +22,22 @@ class AddCardSETActivity : AppCompatActivity() {
         val setNameInput = findViewById<TextInputEditText>(R.id.setNameInput)
         val setNumberInput = findViewById<TextInputEditText>(R.id.setNumberInput)
         val createSetButton = findViewById<Button>(R.id.startCreatingButton)
-
+        val backButton = findViewById<Button>(R.id.backButton)
         // Initialize the database and the DAO for FlashcardSets
         val database = FlashcardDatabase.getInstance(applicationContext)
         val flashcardSetDao = database.flashcardDao() // Corrected DAO access
 
+        backButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         createSetButton.setOnClickListener {
             val setName = setNameInput.text.toString()
             val setNumber = setNumberInput.text.toString().toIntOrNull()
 
             // Validate the inputs
-            if (setName.isEmpty() || setNumber == null || setNumber <= 0) {
+            if (setName.isEmpty() || setNumber == null || setNumber <= 0 || setNumber >=15) {
                 Toast.makeText(this, "Enter valid set details", Toast.LENGTH_LONG).show()
             } else {
                 // Create the new FlashcardSet object

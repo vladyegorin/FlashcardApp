@@ -1,8 +1,8 @@
-// SeeSetsActivity.kt
 package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,17 +16,27 @@ import kotlinx.coroutines.launch
 class SeeSetsActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: FlashcardSetAdapter<FlashcardSet> // Specify type as FlashcardSet
+    private lateinit var adapter: FlashcardSetAdapter
 
     @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.seesets)
+        val backButton = findViewById<Button>(R.id.backButton)
 
         recyclerView = findViewById(R.id.recyclerViewSets)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Fetch data from the database
+        // Load flashcard sets from the database
+        loadSets()
+        backButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish() // Close this activity
+        }
+    }
+
+    private fun loadSets() {
         GlobalScope.launch {
             val sets = FlashcardDatabase.getInstance(applicationContext)
                 .flashcardsetDao()
@@ -37,16 +47,36 @@ class SeeSetsActivity : AppCompatActivity() {
 
             // Update RecyclerView on the main thread
             runOnUiThread {
-                adapter = FlashcardSetAdapter(sets) { flashcardSet ->
-                    // Handle the click event for a flashcard set
-                    val intent = Intent(this@SeeSetsActivity, InsideSetActivity::class.java).apply {
-                        putExtra("setId", flashcardSet.id) // Pass the set ID to the next activity
-                        finish()
+                adapter = FlashcardSetAdapter(
+                    sets = sets,
+                    onItemClick = { flashcardSet ->
+                        // Handle the click event for a flashcard set
+                        val intent = Intent(this@SeeSetsActivity, InsideSetActivity::class.java).apply {
+                            putExtra("setId", flashcardSet.id) // Pass the set ID to the next activity
+                        }
+                        startActivity(intent)
+                    },
+                    onDeleteClick = { flashcardSet ->
+                        // Handle the delete button click
+                        deleteSet(flashcardSet)
                     }
-                    startActivity(intent)
-                }
+                )
                 recyclerView.adapter = adapter
             }
         }
+    }
+
+    private fun deleteSet(flashcardSet: FlashcardSet) {
+        GlobalScope.launch {
+            // Delete the set from the database
+            FlashcardDatabase.getInstance(applicationContext)
+                .flashcardsetDao()
+                .delete(flashcardSet)
+
+            // Reload the sets after deletion
+            loadSets()
+        }
+
+
     }
 }

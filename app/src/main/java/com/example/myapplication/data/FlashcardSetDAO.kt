@@ -1,6 +1,7 @@
 package com.example.myapplication.data
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
@@ -14,4 +15,7 @@ interface FlashcardSetDao {
 
     @Query("SELECT * FROM flashcard_sets") // Replace `flashcard_sets` with your table name
     fun getAllFlashcardSets(): List<FlashcardSet>
+
+    @Delete
+    suspend fun delete(set: FlashcardSet)
 }
