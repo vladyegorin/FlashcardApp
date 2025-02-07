@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_margin="8dp"
+    android:background="@drawable/flashcard_outline"> <!-- Add outline background -->
 
-    <!-- Question TextView -->
-    <TextView
-        android:id="@+id/questionTextView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="Question"/>
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- Answer TextView -->
-    <TextView
-        android:id="@+id/answerTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="?android:attr/textColorSecondary"
-        android:text="Answer"/>
+        <!-- Question TextView -->
+        <TextView
+            android:id="@+id/questionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Question"
+            android:textColor="#7F5ADC"/>
 
-</LinearLayout>
+        <!-- Answer TextView -->
+        <TextView
+            android:id="@+id/answerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#7F5ADC"
+            android:text="Answer"
+            />
+    </LinearLayout>
+</FrameLayout>

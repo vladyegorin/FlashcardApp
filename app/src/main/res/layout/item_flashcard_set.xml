@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/flashcard_outline">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,14 +24,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
+            android:textColor="#7F5ADC"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textViewSetSize"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="?android:attr/textColorSecondary"/>
+            android:textColor="#7F5ADC"/>
 
     </LinearLayout>
 
@@ -38,3 +47,4 @@
         />
 
 </LinearLayout>
+</FrameLayout>

@@ -55,6 +55,7 @@ class SeeSetsActivity : AppCompatActivity() {
                             putExtra("setId", flashcardSet.id) // Pass the set ID to the next activity
                         }
                         startActivity(intent)
+                        finish()
                     },
                     onDeleteClick = { flashcardSet ->
                         // Handle the delete button click
