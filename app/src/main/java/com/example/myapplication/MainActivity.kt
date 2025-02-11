@@ -18,15 +18,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val button1 = findViewById<Button>(R.id.button1)
         val button2 = findViewById<Button>(R.id.button2)
-
+        val button3 = findViewById<Button>(R.id.button3)
         button1.setOnClickListener {
             val intent = Intent(this, AddCardSETActivity::class.java)
             startActivity(intent)
+            finish()
         }
         button2.setOnClickListener {
             val intent = Intent(this, SeeSetsActivity::class.java)
             startActivity(intent)
+            finish()
         }
+        button3.setOnClickListener {
+            val intent = Intent(this, ChooseSetToTestOn::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+
 
 //        val textView1 = findViewById<TextView>(R.id.chigibam)
 //        val textView2 = findViewById<TextView>(R.id.secondtextview)

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 class TestMeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.testme)
+        setContentView(R.layout.testingknowledge)
+        //probably gonna stay unused
     }
 }

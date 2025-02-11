@@ -32,6 +32,8 @@
         </activity>
         <activity android:name=".InsideSetActivity">
         </activity>
+        <activity android:name=".ChooseSetToTestOn">
+        </activity>
 
 
     </application>
