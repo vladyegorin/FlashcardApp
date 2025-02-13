@@ -40,14 +40,11 @@
             android:text="inside testing"
             android:textColor="@android:color/white"
             android:gravity="center"
-            android:maxLines="1"
+            android:maxLines="5"
             android:ellipsize="end"
             android:padding="16dp"
             android:textSize="40sp"
-            app:autoSizeTextType="uniform"
-            app:autoSizeMinTextSize="12sp"
-            app:autoSizeMaxTextSize="80sp"
-            app:autoSizeStepGranularity="2sp"/>
+            app:autoSizeTextType="none"/>
     </androidx.cardview.widget.CardView>
 
     <ImageButton
@@ -64,8 +61,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintWidth_percent="0.15"
-        app:layout_constraintHeight_percent="0.10"
-        />
+        app:layout_constraintHeight_percent="0.10"/>
 
     <ImageButton
         android:id="@+id/buttonPrev"
@@ -81,8 +77,6 @@
         app:layout_constraintEnd_toStartOf="@id/bigPurpleSquare"
         app:layout_constraintVertical_bias="0.5"
         app:layout_constraintWidth_percent="0.15"
-        app:layout_constraintHeight_percent="0.10"
-        />
-
+        app:layout_constraintHeight_percent="0.10"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
