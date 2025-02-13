@@ -58,6 +58,11 @@ class ChooseSetToTestOn : AppCompatActivity() {
                                 putExtra(
                                     "setId",
                                     flashcardSet.id
+
+                                )
+                                putExtra(
+                                    "setName",
+                                    flashcardSet.setName
                                 )
                             }
                         startActivity(intent)
