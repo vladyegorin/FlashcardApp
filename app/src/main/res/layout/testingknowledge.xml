@@ -26,6 +26,8 @@
         android:layout_height="0dp"
         app:cardCornerRadius="16dp"
         app:cardBackgroundColor="#6750A3"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintStart_toEndOf="@id/buttonPrev"
         app:layout_constraintEnd_toStartOf="@id/buttonNext"
         app:layout_constraintTop_toBottomOf="@id/chigibam"

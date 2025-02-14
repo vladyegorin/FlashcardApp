@@ -1,8 +1,11 @@
 package com.example.myapplication
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.data.FlashcardDatabase
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +30,8 @@ class TestMeActivity : AppCompatActivity() {
         val adaptiveTextView = findViewById<TextView>(R.id.adaptiveText)
         val questions = mutableListOf<String>()
         val answers = mutableListOf<String>()
+        val nextButton = findViewById<ImageButton>(R.id.buttonNext)
+        val prevButton = findViewById<ImageButton>(R.id.buttonPrev)
 
         // Fetch flashcards for the set and populate the lists
         lifecycleScope.launch {
@@ -42,15 +47,62 @@ class TestMeActivity : AppCompatActivity() {
                 answers.add(flashcard.answer)
             }
 
-            // Log the lists for debugging
-            android.util.Log.d("TestMeActivity", "Questions: $questions")
-            android.util.Log.d("TestMeActivity", "Answers: $answers")
 
+            var i = 0;
+            var cardPosition = true;
+            val cardView: CardView = findViewById(R.id.bigPurpleSquare)
+            adaptiveTextView.text = "Question: ${questions[i]}"
+            cardView.setOnClickListener {
+                cardPosition = !cardPosition
+                if (cardPosition) {
+                    adaptiveTextView.text = "Question: ${questions[i]}"
 
-            if (questions.isNotEmpty() && answers.isNotEmpty()) {
-                setNameTextView.text = "Question: ${questions[1]}\nAnswer: ${answers[1]}"
-                adaptiveTextView.text = "lfsdfsdwer sdfsdfe errwr qq rwe";
+                } else {
+                    adaptiveTextView.text = "Answer: ${answers[i]}"
+                }
+                //setNameTextView.text = "Question: ${questions[1]}\nAnswer: ${answers[1]}"
+                //adaptiveTextView.text = "Question: ${questions[i]}\\n"
+
+            }
+            prevButton.visibility = Button.INVISIBLE
+
+            cardView.setOnClickListener {
+                cardPosition = !cardPosition
+                adaptiveTextView.text = if (cardPosition) {
+                    "Question: ${questions[i]}"
+                } else {
+                    "Answer: ${answers[i]}"
+                }
+            }
+
+            fun updateButtonVisibility() {
+                prevButton.visibility = if (i == 0) Button.INVISIBLE else Button.VISIBLE
+                nextButton.visibility = if (i == questions.size - 1) Button.INVISIBLE else Button.VISIBLE
+            }
+
+            nextButton.setOnClickListener {
+                if (i < questions.size - 1) {
+                    i++
+                    adaptiveTextView.text = "Question: ${questions[i]}"
+                }
+                updateButtonVisibility()
+            }
+
+            prevButton.setOnClickListener {
+                if (i > 0) {
+                    i--
+                    adaptiveTextView.text = "Question: ${questions[i]}"
+                }
+                updateButtonVisibility()
             }
         }
+        }
     }
-}
+
+
+
+//separate function that mixes up questions and answers
+//button visibility on first and last question(have a currCard variable if 0 left button invis, if n-1 right button invis)
+//will have mixed arrays, and accessed by mixedQ[currCard] and mixedA[currCard]
+//make onclick of bigpurplesquare to switch question and answer
+//make onclick to navigate left and right
