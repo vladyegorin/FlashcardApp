@@ -1,6 +1,12 @@
 package com.example.myapplication
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -20,89 +26,116 @@ class TestMeActivity : AppCompatActivity() {
         val setId = intent.getLongExtra("setId", -1L)
         val setName = intent.getStringExtra("setName")
         if (setId == -1L) {
-            // Invalid set ID, handle this case as needed
             finish()
             return
         }
 
         val setNameTextView = findViewById<TextView>(R.id.chigibam)
         setNameTextView.text = "Set name: $setName"
-        val adaptiveTextView = findViewById<TextView>(R.id.adaptiveText)
+        val questionTextView = findViewById<TextView>(R.id.questionTextView)
+        val answerTextView = findViewById<TextView>(R.id.answerTextView)
         val questions = mutableListOf<String>()
         val answers = mutableListOf<String>()
         val nextButton = findViewById<ImageButton>(R.id.buttonNext)
         val prevButton = findViewById<ImageButton>(R.id.buttonPrev)
+        val doneButton = findViewById<Button>(R.id.doneButton)
+        val cardView: CardView = findViewById(R.id.bigPurpleSquare)
 
-        // Fetch flashcards for the set and populate the lists
+        doneButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         lifecycleScope.launch {
             val flashcards = withContext(Dispatchers.IO) {
                 FlashcardDatabase.getInstance(applicationContext)
                     .flashcardDao()
-                    .getFlashcardsBySetId(setId) // Fetch flashcards by setId
+                    .getFlashcardsBySetId(setId)
             }
-
 
             for (flashcard in flashcards) {
                 questions.add(flashcard.question)
                 answers.add(flashcard.answer)
             }
 
+            shuffleLists(questions, answers)
 
-            var i = 0;
-            var cardPosition = true;
-            val cardView: CardView = findViewById(R.id.bigPurpleSquare)
-            adaptiveTextView.text = "Question: ${questions[i]}"
-            cardView.setOnClickListener {
-                cardPosition = !cardPosition
-                if (cardPosition) {
-                    adaptiveTextView.text = "Question: ${questions[i]}"
-
-                } else {
-                    adaptiveTextView.text = "Answer: ${answers[i]}"
-                }
-                //setNameTextView.text = "Question: ${questions[1]}\nAnswer: ${answers[1]}"
-                //adaptiveTextView.text = "Question: ${questions[i]}\\n"
-
-            }
-            prevButton.visibility = Button.INVISIBLE
+            var i = 0
+            var cardPosition = true
+            questionTextView.text = "Question: ${questions[i]}"
+            answerTextView.text = "Answer: ${answers[i]}"
+            updateButtonVisibility(i, questions.size, prevButton, nextButton)
 
             cardView.setOnClickListener {
                 cardPosition = !cardPosition
-                adaptiveTextView.text = if (cardPosition) {
-                    "Question: ${questions[i]}"
-                } else {
-                    "Answer: ${answers[i]}"
-                }
+
+                // Swap visibility before flipping
+                questionTextView.visibility = if (cardPosition) View.VISIBLE else View.INVISIBLE
+                answerTextView.visibility = if (cardPosition) View.INVISIBLE else View.VISIBLE
+
+                val flipAnimation = ObjectAnimator.ofFloat(cardView, "scaleX", 1f, 0f)
+                flipAnimation.duration = 150
+                flipAnimation.interpolator = DecelerateInterpolator()
+
+                flipAnimation.addListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        // Swap text visibility properly
+                        questionTextView.visibility = if (cardPosition) View.VISIBLE else View.INVISIBLE
+                        answerTextView.visibility = if (cardPosition) View.INVISIBLE else View.VISIBLE
+
+                        // Continue the flip to restore the original scale
+                        val flipBack = ObjectAnimator.ofFloat(cardView, "scaleX", 0f, 1f)
+                        flipBack.duration = 150
+                        flipBack.interpolator = DecelerateInterpolator()
+                        flipBack.start()
+                    }
+                })
+
+                flipAnimation.start()
             }
 
-            fun updateButtonVisibility() {
-                prevButton.visibility = if (i == 0) Button.INVISIBLE else Button.VISIBLE
-                nextButton.visibility = if (i == questions.size - 1) Button.INVISIBLE else Button.VISIBLE
-            }
+
+
+
 
             nextButton.setOnClickListener {
                 if (i < questions.size - 1) {
                     i++
-                    adaptiveTextView.text = "Question: ${questions[i]}"
+                    questionTextView.text = "Question: ${questions[i]}"
+                    answerTextView.text = "Answer: ${answers[i]}"
+                    cardPosition = true // Reset to question when moving to the next card
                 }
-                updateButtonVisibility()
+                updateButtonVisibility(i, questions.size, prevButton, nextButton)
             }
 
             prevButton.setOnClickListener {
                 if (i > 0) {
                     i--
-                    adaptiveTextView.text = "Question: ${questions[i]}"
+                    questionTextView.text = "Question: ${questions[i]}"
+                    answerTextView.text = "Answer: ${answers[i]}"
+                    cardPosition = true // Reset to question when moving to the previous card
                 }
-                updateButtonVisibility()
+                updateButtonVisibility(i, questions.size, prevButton, nextButton)
             }
-        }
         }
     }
 
+    private fun shuffleLists(questions: MutableList<String>, answers: MutableList<String>) {
+        val combined = questions.zip(answers).shuffled()
+        questions.clear()
+        answers.clear()
+        questions.addAll(combined.map { it.first })
+        answers.addAll(combined.map { it.second })
+    }
 
-
-//separate function that mixes up questions and answers
-//button visibility on first and last question(have a currCard variable if 0 left button invis, if n-1 right button invis)
-//will have mixed arrays, and accessed by mixedQ[currCard] and mixedA[currCard]
-//make onclick of bigpurplesquare to switch question and answer
-//make onclick to navigate left and right
+    private fun updateButtonVisibility(
+        currentIndex: Int,
+        totalSize: Int,
+        prevButton: ImageButton,
+        nextButton: ImageButton
+    ) {
+        prevButton.visibility = if (currentIndex == 0) Button.INVISIBLE else Button.VISIBLE
+        nextButton.visibility = if (currentIndex == totalSize - 1) Button.INVISIBLE else Button.VISIBLE
+    }
+}
