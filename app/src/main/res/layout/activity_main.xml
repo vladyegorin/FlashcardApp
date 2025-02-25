@@ -45,6 +45,17 @@
         app:layout_constraintHorizontal_bias="0.5"
 
         android:layout_marginTop="4dp" />
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quiz main"
+        app:layout_constraintTop_toBottomOf="@id/button3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+
+        android:layout_marginTop="4dp" />
 
     <TextView
         android:id="@+id/chigibam"
