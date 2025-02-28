@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -55,6 +57,148 @@
         app:layout_constraintStart_toEndOf="@id/questionText"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.096" />
+
+    <TextView
+        android:id="@+id/chigibam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FLASHCARD APP"
+        android:textColor="#6750A3"
+        android:textSize="40sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeMaxTextSize="40sp"
+        app:autoSizeStepGranularity="2sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="0.039"
+        tools:textStyle="bold"/>
+
+
+
+
+
+
+
+    <!-- Answer 1 (Top-Left) -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/answer1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#6750A3"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toBottomOf="@id/questionCount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/answer2"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHeight_percent="0.25">
+
+            <TextView
+                android:id="@+id/answerText1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Answer 1"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textSize="20sp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Answer 2 (Top-Right) -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/answer2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#6750A3"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toBottomOf="@id/questionText"
+            app:layout_constraintStart_toEndOf="@id/answer1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHeight_percent="0.25">
+
+            <TextView
+                android:id="@+id/answerText2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Answer 2"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textSize="20sp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Answer 3 (Bottom-Left) -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/answer3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#6750A3"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toBottomOf="@id/answer1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/answer4"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHeight_percent="0.25">
+
+            <TextView
+                android:id="@+id/answerText3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Answer 3"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textSize="20sp"/>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Answer 4 (Bottom-Right) -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/answer4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="#6750A3"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginTop="50dp"
+            app:layout_constraintTop_toBottomOf="@id/answer2"
+            app:layout_constraintStart_toEndOf="@id/answer3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintHeight_percent="0.25">
+
+            <TextView
+                android:id="@+id/answerText4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Answer 4"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textSize="20sp"/>
+        </androidx.cardview.widget.CardView>
+
+
+
+
+
 
     <Button
         android:id="@+id/backButton"

@@ -10,11 +10,16 @@ import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 import java.io.IOException
+import java.io.Serializable
 
 class QuizMainActivity : AppCompatActivity() {
 
     private lateinit var groq: Groq
+    private lateinit var questionsSplit: Array<String>
+    private lateinit var answersSplit: Array<Array<String>>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,13 +45,21 @@ class QuizMainActivity : AppCompatActivity() {
                 val aiAns = airesp.split(":").toTypedArray();
                 val questionsSplit = aiAns[0].split(",").toTypedArray();//1D array
                 val answersSplit = aiAns[1].split("/").map { it.split(";").toTypedArray() }
-                    .toTypedArray()//2D array
+                    .toTypedArray() // 2D array
+
+                // Convert 2D array to List<List<String>> for serialization
+                val answersList = answersSplit.map { it.toList() }.toList()
 
 
+                val intent = Intent(this@QuizMainActivity, QuizQuestionActivity::class.java)
+                intent.putExtra("questions", questionsSplit)
+                intent.putExtra("answers", answersList as Serializable)
+                startActivity(intent)
+                finish()
             }
-            val intent = Intent(this, QuizQuestionActivity::class.java)
-            startActivity(intent)
-            finish()
+
+
+
         }
 
     }
@@ -71,7 +84,7 @@ class QuizMainActivity : AppCompatActivity() {
     - Do not include any additional text in the response.
     - Ensure that each question has exactly one correct answer, marked with "*".
     - Make the questions easy as per the topic.
-    - Keep the answers 3 words max.
+    
 """.trimIndent()
 
 
