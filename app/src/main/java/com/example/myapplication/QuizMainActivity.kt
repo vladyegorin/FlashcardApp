@@ -82,8 +82,10 @@ class QuizMainActivity : AppCompatActivity() {
     Rules:
     - Do not include the word "Question" before each question.
     - Do not include any additional text in the response.
-    - Ensure that each question has exactly one correct answer, marked with "*".
+    - Ensure that each question has exactly one correct answer, marked with "*". Ensure that the other options are definitely not correct answers.
     - Make the questions easy as per the topic.
+    - All answer's first letter to be capital.
+    
     
 """.trimIndent()
 

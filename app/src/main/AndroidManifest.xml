@@ -38,6 +38,8 @@
         </activity>
         <activity android:name=".QuizQuestionActivity">
         </activity>
+        <activity android:name=".QuizResultsActivity">
+        </activity>
 
 
     </application>
