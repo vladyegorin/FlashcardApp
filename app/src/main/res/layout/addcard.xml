@@ -21,42 +21,7 @@
 
 
 
-    <!--
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="name"
-        android:textColor="#6750A3"
-        android:textSize="40sp"
 
-
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="150dp"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toTopOf="parent"
-
-        tools:textStyle="bold" />
-
-
-
-    <TextView
-        android:id="@+id/number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="number"
-        android:textColor="#6750A3"
-        android:textSize="40sp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="250dp"
-        app:layout_constraintStart_toStartOf="parent"
-
-        app:layout_constraintTop_toTopOf="parent"
-        tools:textStyle="bold" />
-
-        !-->
 
 
     <TextView
