@@ -1,0 +1,5 @@
+<!-- res/drawable/answer_card_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/default_answer_color" />
+    <corners android:radius="16dp" /> <!-- Adjust radius as needed -->
+</shape>

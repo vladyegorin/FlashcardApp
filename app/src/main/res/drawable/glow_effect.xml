@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="#6750A3"/> <!-- Color of the answer background (e.g., purple) -->
     <stroke
-        android:color="#ffffff"
-        android:width="4dp"/>
+        android:color="#1B256A"
+        android:width="14dp"/>
     <corners android:radius="16dp"/> <!-- Optional, for rounded corners -->
 </shape>

@@ -62,7 +62,7 @@
         android:id="@+id/chigibam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FLASHCARD APP"
+        android:text="question here"
         android:textColor="#6750A3"
         android:textSize="40sp"
         android:maxLines="1"
@@ -199,17 +199,6 @@
 
 
 
-
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-        />
 
     <Button
         android:id="@+id/nextButton"
