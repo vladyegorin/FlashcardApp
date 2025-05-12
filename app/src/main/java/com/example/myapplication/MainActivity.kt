@@ -28,17 +28,17 @@ class MainActivity : AppCompatActivity() {
         button2.setOnClickListener {
             val intent = Intent(this, SeeSetsActivity::class.java)
             startActivity(intent)
-            finish()
+
         }
         button3.setOnClickListener {
             val intent = Intent(this, ChooseSetToTestOn::class.java)
             startActivity(intent)
-            finish()
+
         }
         button4.setOnClickListener {
             val intent = Intent(this, QuizMainActivity::class.java)
             startActivity(intent)
-            finish()
+
         }
 
 

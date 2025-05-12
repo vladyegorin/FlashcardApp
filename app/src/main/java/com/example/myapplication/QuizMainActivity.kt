@@ -85,6 +85,8 @@ class QuizMainActivity : AppCompatActivity() {
     - Ensure that each question has exactly one correct answer, marked with "*". Ensure that the other options are definitely not correct answers.
     - Make the questions easy as per the topic.
     - All answer's first letter to be capital.
+    - After coming up with questions and answers, go over them again to ensure that answers generally match the question. Sometimes I feel like you mess this part up.
+    - THE MOST IMPORTANT - LISTEN TO ALL INSTRUCTIONS CAREFULLY. OUTPUT IN THE EXACT FORMAT I ASKED FOR.
     
     
 """.trimIndent()
